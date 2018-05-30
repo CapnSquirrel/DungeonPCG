@@ -8,15 +8,13 @@ class Node:
 
     def write(self):
         print('..........')
-        try:
-            print(self.type, self.id)
-        except AttributeError:
-            print(self.type)
+        print(self.type)
 
         parents = ''
         for p in self.parents:
             parents += f'{p.type} '
         print("parents:", parents)
+
         children = ''
         for c in self.children:
             children += f'{c.type} '
@@ -48,27 +46,32 @@ class Exit(Node):
 
 class Empty(Node):
     def __init__(self, id):
-        self.type = "Empty"
-        self.id = id
+        self.type = f"Empty_{id}"
         self.children = []
         self.parents = []
 
 class Treasure(Node):
     def __init__(self, id):
-        self.type = "Treasure"
-        self.id = id
+        self.type = f"Treasure_{id}"
         self.children = []
         self.parents = []
 
 class Trap(Node):
     def __init__(self, id):
-        self.type = "Trap"
-        self.id = id
+        self.type = f"Trap_{id}"
         self.children = []
         self.parents = []
 
 class Adjacency(Node):
     def __init__(self, room1, room2):
-        self.type = f'{room1.type} + {room2.type}'
-        self.children = []
-        self.parents = []
+        self.type = f'{room1.type}+{room2.type}'
+        self.parents = [room1, room2]
+
+    def write(self):
+        print('..........')
+        print(self.type)
+
+        parents = ''
+        for p in self.parents:
+            parents += f'{p.type} '
+        print("parents:", parents)
