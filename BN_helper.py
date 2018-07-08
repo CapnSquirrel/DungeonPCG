@@ -57,4 +57,5 @@ def decorate(input):
             decorated_list[name] = item
         else:
             decorated_list[name] = item.parameters[0]
-    pp.pprint(decorated_list)
+    # pp.pprint(decorated_list)
+    return decorated_list

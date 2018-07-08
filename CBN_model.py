@@ -16,7 +16,7 @@ class DAG:
                 self.node_count+=1
 
 # automatically add the adjacency nodes and orient every node in the graph
-    def populate_and_orient(self):
+    def populate_and_orient(self, parameters):
         nodes = self.node_count - 2 # the size node does not count toward this total and the sequence is off by 1 (one).
         adjacency_nodes = []
 
@@ -50,6 +50,6 @@ class DAG:
 
 # Only instantiate non-default rooms (Treasure, Trap, Empty). Minimum requirement rooms are instantiated by default.
 
-model = DAG([Treasure(1), Treasure(2), Trap(1), Trap(2), Empty(1), Empty(2)])
-model.populate_and_orient()
-model.write("all")
+# model = DAG([Treasure(1), Treasure(2), Trap(1), Trap(2), Empty(1), Empty(2)])
+# model.populate_and_orient()
+# model.write("rooms")
