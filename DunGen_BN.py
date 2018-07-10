@@ -605,5 +605,5 @@ model.add_transition(Empty_2, Empty_1_Empty_2)
 model.bake()
 
 # print (model.predict_proba({}))
-parameters = decorate(model.predict_proba({'size': 'l'}))
+# parameters = decorate(model.predict_proba({'size': 'l'}))
 # print model.predict_proba({'size': 's', 'treasure_2': '1', 'trap_2': '1', 'empty_2': '1'})

@@ -36,6 +36,8 @@ class DAG:
 
         self.nodes['adjacencies'] = adjacency_nodes
 
+
+
     def write(self, entry):
         if entry is "all":
             for k, item in self.nodes.items():

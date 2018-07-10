@@ -5,6 +5,7 @@ class Node:
         self.type = "Generic"
         self.children = []
         self.parents = []
+        self.parameters = {}
 
     def write(self):
         print('..........')
