@@ -17,6 +17,8 @@ class DAG:
 
 # automatically add the adjacency nodes and orient every node in the graph
     def populate_and_orient(self, parameters):
+        self.nodes['size'].parameters = parameters['Size']
+
         nodes = self.node_count - 2 # the size node does not count toward this total and the sequence is off by 1 (one).
         adjacency_nodes = []
 
@@ -25,18 +27,21 @@ class DAG:
             if node.type != "Entrance" and node.type != "Boss" and node.type != "Exit":
                 node.parents.append(self.nodes['size'])
                 self.nodes['size'].children.append(node)
+            node.parameters = parameters[node.type]
 
         # create adjacency nodes based on existing rooms, mark them as the children to the rooms they were created out of
         pairs = list(itertools.combinations(self.nodes['rooms'], 2))
         for pair in pairs:
             created_node = Adjacency(pair[0], pair[1])
+            created_node.parameters = parameters[created_node.type]
             adjacency_nodes.append(created_node)
             pair[0].children.append(created_node)
             pair[1].children.append(created_node)
 
         self.nodes['adjacencies'] = adjacency_nodes
 
-
+    def cascade_inference(self):
+        # make all of the decisions for every node via graph traversal
 
     def write(self, entry):
         if entry is "all":
