@@ -1,7 +1,10 @@
 # Dungeon causal Bayesian network model. Procedurally creates DAG based on given dungeon rooms and their intended behaviorself.
 
 from CBN_node_classes import Size, Entrance, Boss, Exit, Empty, Treasure, Trap, Adjacency
+from DunGen_BN import model as inference_model
+import BN_helper
 import itertools
+import numpy as np
 
 class DAG:
     def __init__(self, nodes):
@@ -17,6 +20,10 @@ class DAG:
 
 # automatically add the adjacency nodes and orient every node in the graph
     def populate_and_orient(self, parameters):
+        """
+        populates BN with given probabilistic parameters, creates adjacency nodes for rooms marked as such,
+        and orients edges for all nodes.
+        """
         self.nodes['size'].parameters = parameters['Size']
 
         nodes = self.node_count - 2 # the size node does not count toward this total and the sequence is off by 1 (one).
@@ -40,10 +47,23 @@ class DAG:
 
         self.nodes['adjacencies'] = adjacency_nodes
 
-    def cascade_inference(self):
-        # make all of the decisions for every node via graph traversal
+    def cascade_inference(self, given):
+        """makes all of the decisions for every node via graph traversal."""
+        # probably start at root/size
+        # visit node, make coin flip and decide on 1 or 0
+        # update the entire BN....??
+        # move on to children of visited node... yeah
+
+        # np.random.choice([0,1], 1, p=list(self.nodes['rooms'][0].parameters.values()))
+
+        current_node = self.nodes['size']
+
+
 
     def write(self, entry):
+        """
+        Entry is either 'all' or 'rooms', this prints either the entire BN or just the room nodes.
+        """
         if entry is "all":
             for k, item in self.nodes.items():
                 if type(item) is list:
@@ -52,6 +72,7 @@ class DAG:
                 else:
                     item.write()
         else:
+            # only other option is 'rooms'
             for node in self.nodes[entry]:
                 node.write()
 
@@ -59,4 +80,4 @@ class DAG:
 
 # model = DAG([Treasure(1), Treasure(2), Trap(1), Trap(2), Empty(1), Empty(2)])
 # model.populate_and_orient()
-# model.write("rooms")
+# model.write("all")

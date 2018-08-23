@@ -14,7 +14,7 @@ given = {'size': str.strip(input_size)}
 parameters = BN_helper.decorate(inference_model.predict_proba(given))
 
 structured_model.populate_and_orient(parameters) # generate nodes and populate with parameters
-structured_model.cascade_inference() # make cascading decisions through the BN
-structured_model.write("all")
+structured_model.cascade_inference(given) # make cascading decisions through the BN
+# structured_model.write('all')
 
 # print(parameters)
