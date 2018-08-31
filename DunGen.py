@@ -10,11 +10,12 @@ if input_size not in ["s", "m", "l"]:
 
 structured_model = CBN_model.DAG([Treasure(1), Treasure(2), Trap(1), Trap(2), Empty(1), Empty(2)])
 
-given = {'size': str.strip(input_size)}
-parameters = BN_helper.decorate(inference_model.predict_proba(given))
-
+given = {'size': str.strip(input_size)} # will include specified rooms in the future
+parameters = BN_helper.decorate(inference_model.predict_proba(given)) # had to pass this in because of predict_proba's args
+# print(parameters)
 structured_model.populate_and_orient(parameters) # generate nodes and populate with parameters
 structured_model.cascade_inference(given) # make cascading decisions through the BN
+print(given)
 # structured_model.write('all')
 
 # print(parameters)

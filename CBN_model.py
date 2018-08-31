@@ -48,16 +48,29 @@ class DAG:
         self.nodes['adjacencies'] = adjacency_nodes
 
     def cascade_inference(self, given):
-        """makes all of the decisions for every node via graph traversal."""
-        # probably start at root/size
-        # visit node, make coin flip and decide on 1 or 0
-        # update the entire BN....??
-        # move on to children of visited node... yeah
+        """
+        Monte Carlo simulation for every node via graph traversal.
+        """
 
-        # np.random.choice([0,1], 1, p=list(self.nodes['rooms'][0].parameters.values()))
+        simulations_steps = [[self.nodes['size']]]
+        frontier = set()
 
-        current_node = self.nodes['size']
+        # topological sort to store each simulation step as a list of nodes
 
+        for node in self.nodes['rooms']:
+            if len(node.parents) == 0:
+                simulations_steps[0].append(node)
+
+        for root in simulations_steps[0]:
+            frontier.update(root.children)
+
+        # for node in frontier:
+        #     if
+
+        for step in simulations_steps:
+            for node in step:
+                if node.type != 'Size':
+                    given[node.type.lower()] = str(np.random.choice([0,1], 1, p=list(node.parameters.values()))[0])
 
 
     def write(self, entry):
