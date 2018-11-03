@@ -6,6 +6,13 @@ class Node:
         self.children = []
         self.parents = []
         self.parameters = {}
+        self.simulated = False
+
+    def __str__(self):
+        return self.type
+    
+    def __repr__(self):
+        return self.type
 
     def write(self):
         print("..........")
@@ -29,6 +36,7 @@ class Size(Node):
         self.children = []
         self.parents = []
         self.parameters = {}
+        self.simulated = False
 
 class Entrance(Node):
     def __init__(self):
@@ -36,6 +44,7 @@ class Entrance(Node):
         self.children = []
         self.parents = []
         self.parameters = {}
+        self.simulated = False
 
 class Boss(Node):
     def __init__(self):
@@ -43,6 +52,7 @@ class Boss(Node):
         self.children = []
         self.parents = []
         self.parameters = {}
+        self.simulated = False
 
 class Exit(Node):
     def __init__(self):
@@ -50,6 +60,7 @@ class Exit(Node):
         self.children = []
         self.parents = []
         self.parameters = {}
+        self.simulated = False
 
 class Empty(Node):
     def __init__(self, id):
@@ -57,6 +68,7 @@ class Empty(Node):
         self.children = []
         self.parents = []
         self.parameters = {}
+        self.simulated = False
 
 class Treasure(Node):
     def __init__(self, id):
@@ -64,6 +76,7 @@ class Treasure(Node):
         self.children = []
         self.parents = []
         self.parameters = {}
+        self.simulated = False
 
 class Trap(Node):
     def __init__(self, id):
@@ -71,12 +84,14 @@ class Trap(Node):
         self.children = []
         self.parents = []
         self.parameters = {}
+        self.simulated = False
 
 class Adjacency(Node):
     def __init__(self, room1, room2):
         self.type = f"{room1.type}_{room2.type}"
         self.parents = [room1, room2]
         self.parameters = {}
+        self.simulated = False
 
     def write(self):
         print("..........")

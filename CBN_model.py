@@ -47,31 +47,51 @@ class DAG:
 
         self.nodes['adjacencies'] = adjacency_nodes
 
-    def cascade_inference(self, given):
+    def topo_sort(self):
         """
-        Monte Carlo simulation for every node via graph traversal.
+        Topological sort to store each simulation step as a list of nodes.
         """
 
         simulations_steps = [[self.nodes['size']]]
         frontier = set()
 
-        # topological sort to store each simulation step as a list of nodes
-
+        # add all parentless nodes to the first simulation step, these are the roots
         for node in self.nodes['rooms']:
-            if len(node.parents) == 0:
+            if not node.parents:
                 simulations_steps[0].append(node)
 
+        # add the children of the roots to the frontier
         for root in simulations_steps[0]:
+            root.simulated = True
             frontier.update(root.children)
 
-        # for node in frontier:
-        #     if
+        while frontier:
+            step = []
+            frontier_copy = frontier.copy()
+            for node in frontier_copy:
+                # add to step if all parents for a node in the frontier have been simulated
+                if not [True for parent in node.parents if not parent.simulated]:
+                    step.append(node)
+                    frontier.discard(node)
+                    node.simulated = True
+                    if type(node) is not Adjacency:
+                        frontier.update(node.children)
+            simulations_steps.append(step)
+        return simulations_steps
+
+    def cascade_inference(self, given):
+        """
+        Monte Carlo simulation for every node via graph traversal.
+        """
+        simulations_steps = self.topo_sort()
+        # print(simulations_steps)
 
         for step in simulations_steps:
             for node in step:
                 if node.type != 'Size':
                     given[node.type.lower()] = str(np.random.choice([0,1], 1, p=list(node.parameters.values()))[0])
 
+        print(given)
 
     def write(self, entry):
         """
