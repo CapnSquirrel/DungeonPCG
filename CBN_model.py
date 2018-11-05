@@ -77,6 +77,7 @@ class DAG:
                     if type(node) is not Adjacency:
                         frontier.update(node.children)
             simulations_steps.append(step)
+        
         return simulations_steps
 
     def cascade_inference(self, given):
@@ -84,14 +85,22 @@ class DAG:
         Monte Carlo simulation for every node via graph traversal.
         """
         simulations_steps = self.topo_sort()
-        # print(simulations_steps)
 
+        updated_parameters = BN_helper.decorate(inference_model.predict_proba(given))
         for step in simulations_steps:
             for node in step:
+                node.parameters = updated_parameters[node.type]
                 if node.type != 'Size':
                     given[node.type.lower()] = str(np.random.choice([0,1], 1, p=list(node.parameters.values()))[0])
+            updated_parameters = BN_helper.decorate(inference_model.predict_proba(given))
+        
+        for node in self.nodes['rooms']:
+            node.parameters = updated_parameters[node.type]
 
-        print(given)
+        for node in self.nodes['adjacencies']:
+            node.parameters = updated_parameters[node.type]
+            
+        return given
 
     def write(self, entry):
         """
@@ -105,7 +114,7 @@ class DAG:
                 else:
                     item.write()
         else:
-            # only other option is 'rooms'
+            # other option is 'rooms'
             for node in self.nodes[entry]:
                 node.write()
 
