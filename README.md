@@ -3,8 +3,10 @@ Summer Undergraduate Research Program project involving the procedural generatio
 
 Project By Alejandro Zapata, advised by Dr. Andrew Forney
 
-<object data="/CausalInferenceinProceduralDungeonGeneration.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="/CausalInferenceinProceduralDungeonGeneration.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="/CausalInferenceinProceduralDungeonGeneration.pdf">Download PDF</a>.</p>
+![Project poster](/media/CausalInferenceinProceduralDungeonGeneration.png)
+
+<object data="/media/CausalInferenceinProceduralDungeonGeneration.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="/media/CausalInferenceinProceduralDungeonGeneration.pdf">
+        <p>Download the PDF to view it: <a href="/media/CausalInferenceinProceduralDungeonGeneration.pdf">Download PDF</a>.</p>
     </embed>
 </object>
