@@ -14,5 +14,5 @@ given = {'size': str.strip(input_size)} # will include specified rooms in the fu
 parameters = BN_helper.decorate(inference_model.predict_proba(given)) # had to pass this in because of predict_proba's args
 structured_model.populate_and_orient(parameters) # generate nodes and populate with parameters
 generated_dungeon = structured_model.cascade_inference(given) # make cascading decisions through the BN
-# print(generated_dungeon)
+print(generated_dungeon)
 # structured_model.write('all')
